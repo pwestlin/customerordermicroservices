@@ -3,7 +3,6 @@ FROM openjdk:8-jdk-alpine
 
 LABEL maintainer="peter@westlin.nu"
 
-#ARG JAVA_OPTS="-XX:-TieredCompilation -XX:MaxRAMPercentage=80"
 ARG PORT=3000
 
 ENV JAVA_OPTS ${JAVA_OPTS}
