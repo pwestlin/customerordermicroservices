@@ -1,11 +1,11 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot") version "2.2.1.RELEASE"
-	id("io.spring.dependency-management") version "1.0.8.RELEASE"
-	kotlin("jvm") version "1.3.50"
-	kotlin("plugin.spring") version "1.3.50"
-	id("com.palantir.docker") version "0.22.1"
+	id("org.springframework.boot")
+	id("io.spring.dependency-management")
+	kotlin("jvm")
+	kotlin("plugin.spring")
+	id("com.palantir.docker")
 }
 
 group = "nu.westlin.microservices"

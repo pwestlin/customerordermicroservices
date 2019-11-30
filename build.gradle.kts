@@ -1,13 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	id("org.springframework.boot")
-	id("io.spring.dependency-management")
-	kotlin("jvm")
-	kotlin("plugin.spring")
-	id("com.palantir.docker")
+	id("org.springframework.boot") version "2.2.1.RELEASE" apply false
+	id("io.spring.dependency-management") version "1.0.8.RELEASE" apply false
+	kotlin("jvm") version "1.3.61" apply false
+	kotlin("plugin.spring") version "1.3.61" apply false
+	id("com.palantir.docker") version "0.22.1" apply false
 }
 
+/*
 group = "nu.westlin.microservices"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
@@ -19,11 +20,10 @@ repositories {
 extra["springCloudVersion"] = "Hoxton.RELEASE"
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+	implementation("org.springframework.cloud:spring-cloud-starter-netflix-zuul")
 	testImplementation("org.springframework.boot:spring-boot-starter-test") {
 		exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
 	}
@@ -53,11 +53,13 @@ tasks {
             attributes("Multi-Release" to true)
         }
 
+*/
 /*
         archiveBaseName.set(appName)
         archiveVersion.set(appVer)
-*/
-        archiveBaseName.set("customer-service")
+*//*
+
+        archiveBaseName.set("gateway-service")
         archiveVersion.set("0.1")
 
         if (project.hasProperty("archiveName")) {
@@ -65,11 +67,11 @@ tasks {
         }
     }
 
-    docker {
+	docker {
         val build = build.get()
         val bootJar = bootJar.get()
         //val dockerImageName = "${project.group}/$appName"
-        val dockerImageName = "${project.group}/customer-service"
+        val dockerImageName = "${project.group}/gateway-service"
 
         dependsOn(build)
 
@@ -87,3 +89,4 @@ tasks {
         pull(true)
     }
 }
+*/

@@ -59,5 +59,5 @@ http://localhost:8080/orders/customer/1
 * OpenFeign?
 * Ribbon?
 * Hystrix?
-* Kotlin 1.3.61 - define in root project
 * define common stuff in root project
+* Tests... :D
