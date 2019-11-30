@@ -56,7 +56,7 @@ http://localhost:8080/orders/customer/1
 
 
 ## TODO
-* Another service that combines info from the order-service and customer-service (using coroutines?)
+* Another service that combines info from the order-service and customer-service (using coroutines?) like a...web client?
 * OpenFeign?
 * Ribbon?
 * Hystrix?
