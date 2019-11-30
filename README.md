@@ -46,13 +46,13 @@ Start each services with `gradle bootrun` in their respective directory in the f
 You can view all registered services in Eureka server (discovery-service) at http://localhost:3000.  
 
 Get customer with id 1:  
-`curl http://localhost:8080/customers/1`
+http://localhost:8080/customers/1
 
 Get order with id 1:  
-`curl http://localhost:8080/orders/1`
+http://localhost:8080/orders/1
 
 Get all orders for customer with id 1:  
-`curl http://localhost:8080/orders/customer/1`
+http://localhost:8080/orders/customer/1
 
 
 ## TODO
