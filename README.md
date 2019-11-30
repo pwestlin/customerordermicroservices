@@ -33,7 +33,7 @@ Order API.
 2. Start system: `docker-compose up`
 
 In a production system the only exposed port from Docker Compose would be the port for the gateway-service (8080).  
-I've chosen to export all the services ports so you can try to call the services directly.
+I've chosen to export 3000 which is the port for Eureka.
 
 ### Gradle
 Start each services with `gradle bootrun` in their respective directory in the following order:
