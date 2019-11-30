@@ -22,11 +22,11 @@ class Order(val id: Int, val customerId: Int, val name: String)
 class OrderController {
 
     private val allOrders: List<Order> = listOf(
-        Order(1, 1, "Product A"),
-        Order(2, 1, "Product B"),
-        Order(3, 2, "Product C"),
-        Order(4, 1, "Product D"),
-        Order(5, 2, "Product E")
+        Order(1, 1, "Lipstick"),
+        Order(2, 1, "Skirt"),
+        Order(3, 2, "Pants"),
+        Order(4, 1, "Shoes"),
+        Order(5, 2, "Shoes")
     )
 
     @GetMapping("/{id}")

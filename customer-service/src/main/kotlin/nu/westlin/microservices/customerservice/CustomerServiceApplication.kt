@@ -24,8 +24,8 @@ class Customer(val id: Int, val name: String)
 class CustomerController {
 
     private val allCustomers: List<Customer> = listOf(
-        Customer(1, "Joe Bloggs"),
-        Customer(2, "Jane Doe")
+        Customer(1, "Daisy Duck"),
+        Customer(2, "Mickey Mouse")
     )
 
     @GetMapping("/{id}")
