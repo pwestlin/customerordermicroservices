@@ -4,12 +4,12 @@ FROM openjdk:8-jdk-alpine
 LABEL maintainer="peter@westlin.nu"
 
 #ARG JAVA_OPTS="-XX:-TieredCompilation -XX:MaxRAMPercentage=80"
-ARG PORT=8080
+#ARG PORT=8080
 
 ENV JAVA_OPTS ${JAVA_OPTS}
-ENV SERVER_PORT ${PORT}
+#ENV SERVER_PORT ${PORT}
 
-EXPOSE ${PORT}
+#EXPOSE ${PORT}
 
 ARG JAR_FILE
 COPY ${JAR_FILE} /app.jar
