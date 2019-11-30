@@ -1,0 +1,52 @@
+version: "3.1"
+networks:
+    systemtest:
+        driver: bridge
+services:
+  discovery-service:
+    image: nu.westlin.microservices/discovery-service:latest
+    networks:
+        systemtest:
+            aliases:
+                - discovery-service
+    ports:
+      - 3000:3000
+
+  order-service:
+    image: nu.westlin.microservices/order-service:latest
+    environment:
+        - eureka.client.serviceUrl.defaultZone=http://discovery-service:3000/eureka/
+    networks:
+        systemtest:
+            aliases:
+                - order-service
+    ports:
+      - 3001:3001
+    depends_on:
+      - discovery-service
+
+  customer-service:
+    image: nu.westlin.microservices/customer-service:latest
+    environment:
+        - eureka.client.serviceUrl.defaultZone=http://discovery-service:3000/eureka/
+    networks:
+        systemtest:
+            aliases:
+                - customer-service
+    ports:
+      - 3002:3002
+    depends_on:
+      - discovery-service
+
+  gateway-service:
+    image: nu.westlin.microservices/gateway-service:latest
+    environment:
+        - eureka.client.serviceUrl.defaultZone=http://discovery-service:3000/eureka/
+    networks:
+        systemtest:
+            aliases:
+                - gateway-service
+    ports:
+      - 8080:8080
+    depends_on:
+      - discovery-service
