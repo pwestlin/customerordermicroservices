@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.cloud.client.discovery.DiscoveryClient
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -37,21 +38,27 @@ class WebConfiguration {
     @Bean
     fun restTemplate(@Value("\${api.rooUri}") apiRootUri: String): RestTemplate {
         logger.info("apiRootUri = $apiRootUri")
-        return RestTemplateBuilder().rootUri(apiRootUri).build()
+        return RestTemplateBuilder()
+            //.rootUri(apiRootUri)
+            .build()
     }
 }
 
 @Controller
-class WebController(private val restTemplate: RestTemplate) {
+class WebController(private val restTemplate: RestTemplate, private val discoveryClient: DiscoveryClient) {
+    val logger: Logger = LoggerFactory.getLogger(this.javaClass)
 
     @GetMapping(path = ["/", "/index.html"])
     fun allOrders(model: HashMap<String, Any>): ModelAndView {
+        val instance = discoveryClient.getInstances("gateway-service").random()
+        val url = "http://${instance.host}:${instance.port}/api"
+        logger.info("url = $url")
         runBlocking(Dispatchers.IO) {
             launch {
-                model["orders"] = restTemplate.getForObject<List<Order>>("/orders")
+                model["orders"] = restTemplate.getForObject<List<Order>>("$url/orders")
             }
             launch {
-                model["customers"] = restTemplate.getForObject<List<Customer>>("/customers")
+                model["customers"] = restTemplate.getForObject<List<Customer>>("$url/customers")
             }
         }
 

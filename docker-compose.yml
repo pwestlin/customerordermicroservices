@@ -52,10 +52,22 @@ services:
     depends_on:
       - discovery-service
 
+  gateway-service2:
+    image: nu.westlin.microservices/gateway-service:latest
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery-service:3000/eureka/
+    networks:
+      microservices:
+        aliases:
+          - gateway-service2
+    ports:
+      - 8091:8090
+    depends_on:
+      - discovery-service
+
   web:
     image: nu.westlin.microservices/web:latest
     environment:
-      - api.rooUri=http://gateway-service:8090/api
       - eureka.client.serviceUrl.defaultZone=http://discovery-service:3000/eureka/
     networks:
       microservices:
