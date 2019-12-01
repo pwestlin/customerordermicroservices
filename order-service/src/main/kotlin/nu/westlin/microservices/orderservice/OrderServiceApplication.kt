@@ -29,6 +29,11 @@ class OrderController {
         Order(5, 2, "Shoes")
     )
 
+    @GetMapping("/")
+    fun allOrders(): List<Order> {
+        return allOrders
+    }
+
     @GetMapping("/{id}")
     fun getOrderById(@PathVariable id: Int): Order {
         return allOrders

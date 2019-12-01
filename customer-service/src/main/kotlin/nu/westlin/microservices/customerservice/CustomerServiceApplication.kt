@@ -28,6 +28,11 @@ class CustomerController {
         Customer(2, "Mickey Mouse")
     )
 
+    @GetMapping("/")
+    fun allCustomers(): List<Customer> {
+        return allCustomers
+    }
+
     @GetMapping("/{id}")
     fun getCustomerById(@PathVariable id: Int, response: HttpServletResponse): Customer? {
         val customer = allCustomers
