@@ -1,0 +1,32 @@
+{{> header}}
+
+<h2>Customers</h2>
+<table>
+    <tr>
+        <th>id</th>
+        <th>name</th>
+    </tr>
+    {{#customers}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{name}}</td>
+        </tr>
+    {{/customers}}
+</table>
+<h2>Orders</h2>
+<table>
+    <tr>
+        <th>id</th>
+        <th>customerId</th>
+        <th>name</th>
+    </tr>
+    {{#orders}}
+        <tr>
+            <td>{{id}}</td>
+            <td>{{customerId}}</td>
+            <td>{{name}}</td>
+        </tr>
+    {{/orders}}
+</table>
+
+{{> footer}}

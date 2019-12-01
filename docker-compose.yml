@@ -47,6 +47,19 @@ services:
             aliases:
                 - gateway-service
     ports:
-      - 8080:8080
+      - 8090:8090
     depends_on:
       - discovery-service
+
+  web:
+    image: nu.westlin.microservices/web:latest
+    #environment:
+        #- eureka.client.serviceUrl.defaultZone=http://discovery-service:3000/eureka/
+    networks:
+        systemtest:
+            aliases:
+                - gateway-service
+    ports:
+      - 8080:8080
+    depends_on:
+      - gateway-service
