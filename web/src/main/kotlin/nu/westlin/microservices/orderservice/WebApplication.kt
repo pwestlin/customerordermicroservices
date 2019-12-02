@@ -5,11 +5,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.boot.web.client.RestTemplateBuilder
-import org.springframework.cloud.client.discovery.DiscoveryClient
+import org.springframework.cloud.client.loadbalancer.LoadBalancerClient
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -33,26 +32,18 @@ class Customer(val id: Int, val name: String)
 
 @Configuration
 class WebConfiguration {
-    val logger: Logger = LoggerFactory.getLogger(this.javaClass)
 
     @Bean
-    fun restTemplate(@Value("\${api.rooUri}") apiRootUri: String): RestTemplate {
-        logger.info("apiRootUri = $apiRootUri")
-        return RestTemplateBuilder()
-            //.rootUri(apiRootUri)
-            .build()
-    }
+    fun restTemplate(): RestTemplate = RestTemplateBuilder().build()
 }
 
 @Controller
-class WebController(private val restTemplate: RestTemplate, private val discoveryClient: DiscoveryClient) {
+class WebController(private val restTemplate: RestTemplate, private val loadBalancerClient: LoadBalancerClient) {
     val logger: Logger = LoggerFactory.getLogger(this.javaClass)
 
     @GetMapping(path = ["/", "/index.html"])
     fun allOrders(model: HashMap<String, Any>): ModelAndView {
-        val instance = discoveryClient.getInstances("gateway-service").random()
-        val url = "http://${instance.host}:${instance.port}/api"
-        logger.info("url = $url")
+        val url = apiUrl()
         runBlocking(Dispatchers.IO) {
             launch {
                 model["orders"] = restTemplate.getForObject<List<Order>>("$url/orders")
@@ -63,5 +54,11 @@ class WebController(private val restTemplate: RestTemplate, private val discover
         }
 
         return ModelAndView("ordersandcustomers", model)
+    }
+
+    private fun apiUrl(): String {
+        return with(loadBalancerClient.choose("gateway-service")) {
+            "http://${host}:${port}/api"
+        }.also { logger.info("url = $it") }
     }
 }

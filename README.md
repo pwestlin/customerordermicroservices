@@ -33,7 +33,7 @@ Order API.
 2. Start system: `docker-compose up`
 
 In a production system the only exposed port from Docker Compose would be the port for the frontend (8080).  
-I've chosen to export 3000 which is the port for Eureka and 8090 which is the API gateway.
+I've also chosen to export 3000 which is the port for Eureka and 8090 which is the API gateway, for testing purposes.
 
 ## Using
 You can view all registered services in Eureka server (discovery-service) at http://localhost:3000.  
@@ -50,10 +50,11 @@ http://localhost:8090/orders/customer/1
 See all customers and orders in the web frontend:  
 http://localhost:8080/
 
+FÖRKLARA FLÖDET OCH ATT DET FINNS FLERA AV (NÄSTAN) VARJE KOMPONENT
+SKA JAG HA TVÅ GATEWAYS, EN FÖR WEB OCH EN FÖR API?
 
 ## TODO
-* OpenFeign?
-* Ribbon?
+* (Open)Feign?
 * Hystrix?
-* define common stuff in root project
+* define common stuff in Gradle root project
 * Tests... :D

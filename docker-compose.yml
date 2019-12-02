@@ -21,8 +21,17 @@ services:
       microservices:
         aliases:
           - order-service
-    expose:
-      - 3001
+    depends_on:
+      - discovery-service
+
+  order-service2:
+    image: nu.westlin.microservices/order-service:latest
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery-service:3000/eureka/
+    networks:
+      microservices:
+        aliases:
+          - order-service
     depends_on:
       - discovery-service
 
@@ -34,8 +43,17 @@ services:
       microservices:
         aliases:
           - customer-service
-    expose:
-      - 3002
+    depends_on:
+      - discovery-service
+
+  customer-service2:
+    image: nu.westlin.microservices/customer-service:latest
+    environment:
+      - eureka.client.serviceUrl.defaultZone=http://discovery-service:3000/eureka/
+    networks:
+      microservices:
+        aliases:
+          - customer-service
     depends_on:
       - discovery-service
 
@@ -49,19 +67,6 @@ services:
           - gateway-service
     ports:
       - 8090:8090
-    depends_on:
-      - discovery-service
-
-  gateway-service2:
-    image: nu.westlin.microservices/gateway-service:latest
-    environment:
-      - eureka.client.serviceUrl.defaultZone=http://discovery-service:3000/eureka/
-    networks:
-      microservices:
-        aliases:
-          - gateway-service2
-    ports:
-      - 8091:8090
     depends_on:
       - discovery-service
 
